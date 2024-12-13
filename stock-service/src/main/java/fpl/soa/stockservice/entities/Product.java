@@ -3,6 +3,7 @@ package fpl.soa.stockservice.entities;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Table(name = "products")
 @Entity @AllArgsConstructor @NoArgsConstructor @Data
+@Builder
 public class Product {
     @Id
     private UUID id;
