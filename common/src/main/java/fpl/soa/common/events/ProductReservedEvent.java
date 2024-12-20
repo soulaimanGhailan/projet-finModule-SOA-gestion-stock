@@ -11,8 +11,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductReservedEvent {
-    private UUID orderId;
-    private UUID productId;
+    private String orderId;
+    private Long productId;
     private BigDecimal productPrice;
     private Integer productQuantity;
 }

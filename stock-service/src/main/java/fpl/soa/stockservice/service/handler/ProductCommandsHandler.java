@@ -35,6 +35,8 @@ public class ProductCommandsHandler {
     @KafkaHandler
     public void handleCommand(@Payload ReserveProductCommand command) {
 
+        System.out.println("reverved");
+
         try {
             Product desiredProduct = Product.builder().id(command.getProductId()).quantity(command.getProductQuantity()).build();
             Product reservedProduct = productService.reserve(desiredProduct, command.getOrderId());

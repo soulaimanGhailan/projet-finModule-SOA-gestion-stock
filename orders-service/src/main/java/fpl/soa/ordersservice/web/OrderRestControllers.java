@@ -30,7 +30,7 @@ public class OrderRestControllers {
     }
 
     @GetMapping("/{orderId}/history")
-    public List<OrderHistoryEntity> getOrderHistory(@PathVariable UUID orderId) {
+    public List<OrderHistoryEntity> getOrderHistory(@PathVariable String orderId) {
         return orderHistoryService.findByOrderId(orderId) ;
     }
 }

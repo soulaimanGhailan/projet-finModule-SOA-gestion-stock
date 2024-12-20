@@ -14,9 +14,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CreateOrderRequest {
     @NotNull
-    private UUID customerId;
+    private String customerId;
     @NotNull
-    private UUID productId;
+    private Long productId;
     @NotNull
     @Positive
     private Integer productQuantity;

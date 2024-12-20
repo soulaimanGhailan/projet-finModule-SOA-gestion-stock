@@ -33,7 +33,7 @@ public class OrdersServiceImpl implements OrdersService {
     public CreateOrderResponse placeOrder(CreateOrderRequest orderReq) {
         OrderEntity orderEntity = mapper.from(orderReq);
         orderEntity.setStatus(OrderStatus.CREATED);
-        orderEntity.setOrderId(UUID.randomUUID());
+        orderEntity.setOrderId(UUID.randomUUID().toString());
         OrderEntity savedOrderEntity = orderRepo.save(orderEntity);
 
         OrderCreatedEvent orderCreatedEvent = OrderCreatedEvent.builder()
@@ -50,7 +50,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public void approveOrder(UUID orderId) {
+    public void approveOrder(String orderId) {
 
     }
 }

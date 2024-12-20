@@ -3,7 +3,6 @@ package fpl.soa.stockservice.service;
 import fpl.soa.common.exceptions.ProductInsufficientQuantityException;
 import fpl.soa.stockservice.entities.Product;
 import fpl.soa.stockservice.repository.ProductRepo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +18,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product reserve(Product desiredProduct, UUID orderId) {
-        Product productEntity = productRepository.findById(desiredProduct.getId().toString()).orElseThrow();
+    public Product reserve(Product desiredProduct, String orderId) {
+        System.out.println(desiredProduct);
+        Product productEntity = productRepository.findById(desiredProduct.getId()).orElseThrow(() -> new RuntimeException("product not found"));
         if (desiredProduct.getQuantity() > productEntity.getQuantity()) {
             throw new ProductInsufficientQuantityException(productEntity.getId(), orderId);
         }
@@ -30,8 +30,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void cancelReservation(Product productToCancel, UUID orderId) {
-        Product productEntity = productRepository.findById(productToCancel.getId().toString()).orElseThrow();
+    public void cancelReservation(Product productToCancel, String orderId) {
+        Product productEntity = productRepository.findById(productToCancel.getId()).orElseThrow();
         productEntity.setQuantity(productEntity.getQuantity() + productToCancel.getQuantity());
         productRepository.save(productEntity);
     }
@@ -43,6 +43,11 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setPrice(product.getPrice());
         productEntity.setQuantity(product.getQuantity());
         return productRepository.save(productEntity);
+    }
+
+    @Override
+    public Product getById( Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("product not found"));
     }
 
     @Override

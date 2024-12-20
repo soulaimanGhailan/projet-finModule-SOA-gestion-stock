@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -26,7 +27,12 @@ public class ProductsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Product save(@RequestBody @Valid Product request) {
+    public Product save(@RequestBody Product request) {
        return productService.save(request);
+    }
+
+    @GetMapping("/id/{id}")
+    public Product findById(@PathVariable Long id) {
+        return productService.getById(id) ;
     }
 }

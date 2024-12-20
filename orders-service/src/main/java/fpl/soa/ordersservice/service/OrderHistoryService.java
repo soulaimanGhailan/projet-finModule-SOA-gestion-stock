@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface OrderHistoryService {
-    void add(UUID orderId, OrderStatus orderStatus);
-    List<OrderHistoryEntity> findByOrderId(UUID orderId);
+    void add(String orderId, OrderStatus orderStatus);
+    List<OrderHistoryEntity> findByOrderId(String orderId);
 }

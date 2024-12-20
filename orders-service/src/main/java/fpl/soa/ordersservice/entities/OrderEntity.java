@@ -16,9 +16,9 @@ import java.util.UUID;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class OrderEntity {
     @Id
-    private UUID orderId;
+    private String orderId;
     private OrderStatus status;
-    private UUID customerId;
-    private UUID productId;
+    private String customerId;
+    private Long productId;
     private Integer productQuantity;
 }

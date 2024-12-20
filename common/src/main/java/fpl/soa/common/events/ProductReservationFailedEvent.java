@@ -10,8 +10,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductReservationFailedEvent {
-    private UUID productId;
-    private UUID orderId;
+    private Long productId;
+    private String orderId;
     private Integer productQuantity;
 
 }

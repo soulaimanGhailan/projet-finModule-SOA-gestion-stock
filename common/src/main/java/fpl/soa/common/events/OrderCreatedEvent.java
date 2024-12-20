@@ -11,8 +11,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor @Builder
 public class OrderCreatedEvent {
-    private UUID orderId;
-    private UUID customerId;
-    private UUID productId;
+    private String orderId;
+    private String customerId;
+    private Long productId;
     private Integer productQuantity;
 }

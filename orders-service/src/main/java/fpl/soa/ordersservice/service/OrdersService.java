@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface OrdersService {
     CreateOrderResponse placeOrder(CreateOrderRequest orderReq);
-    void approveOrder(UUID orderId);
+    void approveOrder(String orderId);
 }

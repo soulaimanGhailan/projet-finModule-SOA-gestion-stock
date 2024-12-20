@@ -8,17 +8,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.UUID;
 
-@Table(name = "orders_history")
 @Entity @AllArgsConstructor @NoArgsConstructor @Data
 public class OrderHistoryEntity {
     @Id
-    private UUID id;
-    @Column(name = "order_id")
-    private UUID orderId;
-    @Column(name = "status")
+    private String id;
+    private String orderId;
     private OrderStatus status;
-    @Column(name = "created_at")
     private Timestamp createdAt;
 }

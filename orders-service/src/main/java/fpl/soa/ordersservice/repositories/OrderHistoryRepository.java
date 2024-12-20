@@ -2,12 +2,11 @@ package fpl.soa.ordersservice.repositories;
 
 import fpl.soa.ordersservice.entities.OrderHistoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
-@Repository
-public interface OrderHistoryRepository extends JpaRepository<OrderHistoryEntity, UUID> {
-    List<OrderHistoryEntity> findByOrderId(UUID orderId);
+
+public interface OrderHistoryRepository extends JpaRepository<OrderHistoryEntity, String> {
+    List<OrderHistoryEntity> findOrderHistoryEntitiesByOrderId(String orderId);
 }

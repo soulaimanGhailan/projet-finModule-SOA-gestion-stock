@@ -21,17 +21,18 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
     }
 
     @Override
-    public void add(UUID orderId, OrderStatus orderStatus) {
+    public void add(String orderId, OrderStatus orderStatus) {
         OrderHistoryEntity entity = new OrderHistoryEntity();
         entity.setOrderId(orderId);
         entity.setStatus(orderStatus);
         entity.setCreatedAt(new Timestamp(new Date().getTime()));
-        entity.setId(UUID.randomUUID());
+        entity.setId(UUID.randomUUID().toString());
+        System.out.println(entity);
         orderHistoryRepository.save(entity);
     }
 
     @Override
-    public List<OrderHistoryEntity> findByOrderId(UUID orderId) {
-      return  orderHistoryRepository.findByOrderId(orderId);
+    public List<OrderHistoryEntity> findByOrderId(String orderId) {
+      return  orderHistoryRepository.findOrderHistoryEntitiesByOrderId(orderId);
     }
 }

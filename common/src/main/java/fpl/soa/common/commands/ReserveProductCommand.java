@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @AllArgsConstructor @NoArgsConstructor @Data
 public class ReserveProductCommand {
-    private UUID productId;
+    private Long productId;
     private Integer productQuantity;
-    private UUID orderId;
+    private String orderId;
 }
