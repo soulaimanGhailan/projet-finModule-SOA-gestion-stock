@@ -11,4 +11,5 @@ public class ReserveProductCommand {
     private Long productId;
     private Integer productQuantity;
     private String orderId;
+    private String customerId;
 }

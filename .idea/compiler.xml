@@ -8,9 +8,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="orders-service" />
         <module name="stock-service" />
-        <module name="shipment-service" />
         <module name="payment-service" />
         <module name="common" />
+        <module name="customer-service" />
+        <module name="shipment-service" />
         <module name="credit-card-service" />
       </profile>
     </annotationProcessing>
@@ -22,6 +23,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common" options="-parameters" />
       <module name="credit-card-service" options="-parameters" />
+      <module name="customer-service" options="-parameters" />
       <module name="orders-service" options="-parameters" />
       <module name="payment-service" options="-parameters" />
       <module name="products-service" options="-parameters" />

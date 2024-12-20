@@ -19,4 +19,5 @@ public class Product {
     private Integer quantity;
     private String name;
     private BigDecimal price ;
+    private String originLocation ;
 }

@@ -15,4 +15,6 @@ public class ProductReservedEvent {
     private Long productId;
     private BigDecimal productPrice;
     private Integer productQuantity;
+    private String customerId;
+
 }

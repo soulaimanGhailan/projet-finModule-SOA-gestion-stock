@@ -43,7 +43,7 @@ public class ProductCommandsHandler {
             ProductReservedEvent productReservedEvent = new ProductReservedEvent(command.getOrderId(),
                     command.getProductId(),
                     reservedProduct.getPrice(),
-                    command.getProductQuantity());
+                    command.getProductQuantity() , command.getCustomerId());
             kafkaTemplate.send(productEventsTopicName, productReservedEvent);
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage(), e);
