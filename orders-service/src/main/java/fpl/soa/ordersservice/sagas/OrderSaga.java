@@ -1,12 +1,10 @@
 package fpl.soa.ordersservice.sagas;
 
+import fpl.soa.common.commands.ApproveOrderCommand;
 import fpl.soa.common.commands.InitiateShipmentCommand;
 import fpl.soa.common.commands.ProcessPaymentCommand;
 import fpl.soa.common.commands.ReserveProductCommand;
-import fpl.soa.common.events.OrderCreatedEvent;
-import fpl.soa.common.events.PaymentProcessedEvent;
-import fpl.soa.common.events.ProductReservedEvent;
-import fpl.soa.common.events.ShipmentInProgressEvent;
+import fpl.soa.common.events.*;
 import fpl.soa.common.types.OrderStatus;
 import fpl.soa.ordersservice.entities.OrderEntity;
 import fpl.soa.ordersservice.service.OrderHistoryService;
@@ -34,22 +32,24 @@ public class OrderSaga {
     private final String shipmentCommandsTopicName;
     private final String paymentsCommandsTopicName;
     private OrdersService ordersService ;
+    private String ordersCommandsTopicName ;
 
     public OrderSaga(KafkaTemplate<String, Object> kafkaTemplate,
                      @Value("${products.commands.topic.name}") String productsCommandsTopicName,
                      OrderHistoryService orderHistoryService, @Value("${shipment.commands.topic.name}") String shipmentCommandsTopicName,
-                     @Value("${payments.commands.topic.name}") String paymentsCommandsTopicName, OrdersService ordersService) {
+                     @Value("${payments.commands.topic.name}") String paymentsCommandsTopicName, OrdersService ordersService, @Value("${orders.commands.topic.name}") String ordersCommandsTopicName) {
         this.kafkaTemplate = kafkaTemplate;
         this.productsCommandsTopicName = productsCommandsTopicName;
         this.orderHistoryService = orderHistoryService;
         this.shipmentCommandsTopicName = shipmentCommandsTopicName;
         this.paymentsCommandsTopicName = paymentsCommandsTopicName;
         this.ordersService = ordersService;
+        this.ordersCommandsTopicName = ordersCommandsTopicName;
     }
 
     @KafkaHandler
     public void handleEvent(@Payload OrderCreatedEvent event) {
-
+        System.out.println("***** SAGA step 1 : OrderCreated / orderId : " + event.getOrderId() + " ************* ");
         ReserveProductCommand command = new ReserveProductCommand(
                 event.getProductId(),
                 event.getProductQuantity(),
@@ -62,6 +62,7 @@ public class OrderSaga {
 
     @KafkaHandler
     public void handleEvent(@Payload ProductReservedEvent event) {
+        System.out.println("***** SAGA step 2 : ProductReserved / orderId : " + event.getOrderId() + " ************* ");
         ProcessPaymentCommand processPaymentCommand = ProcessPaymentCommand.builder()
                 .orderId(event.getOrderId())
                 .productId(event.getProductId())
@@ -76,6 +77,7 @@ public class OrderSaga {
     }
     @KafkaHandler
     public void handleEvent(@Payload PaymentProcessedEvent event){
+        System.out.println("***** SAGA step 3 : PaymentProcessed / orderId :  " + event.getOrderId() + " ************* ");
         OrderEntity orderWithCustomer = ordersService.getOrderWithCustomer(event.getOrderId());
         InitiateShipmentCommand initiateShipmentCommand = InitiateShipmentCommand.builder()
                 .orderId(event.getOrderId())
@@ -86,6 +88,13 @@ public class OrderSaga {
 
     @KafkaHandler
     public void handleEvent(@Payload ShipmentInProgressEvent event){
-
+        System.out.println("***** SAGA step 4 : ShipmentInProgress / orderId : " + event.getOrderId() + " ************* ");
+        ApproveOrderCommand approveOrderCommand = new ApproveOrderCommand(event.getOrderId());
+        kafkaTemplate.send(ordersCommandsTopicName,approveOrderCommand);
+    }
+    @KafkaHandler
+    public void handleEvent(@Payload OrderApprovedEvent event) {
+        System.out.println("***** SAGA step 5 : OrderApproved / orderId : " + event.getOrderId() + " ************* ");
+        orderHistoryService.add(event.getOrderId(), OrderStatus.APPROVED);
     }
 }

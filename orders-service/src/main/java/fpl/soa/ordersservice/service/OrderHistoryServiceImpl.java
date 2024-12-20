@@ -27,7 +27,6 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
         entity.setStatus(orderStatus);
         entity.setCreatedAt(new Timestamp(new Date().getTime()));
         entity.setId(UUID.randomUUID().toString());
-        System.out.println(entity);
         orderHistoryRepository.save(entity);
     }
 

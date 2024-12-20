@@ -1,5 +1,6 @@
 package fpl.soa.ordersservice.service;
 
+import fpl.soa.common.events.OrderApprovedEvent;
 import fpl.soa.common.events.OrderCreatedEvent;
 import fpl.soa.common.types.OrderStatus;
 import fpl.soa.ordersservice.dtos.CreateOrderRequest;
@@ -14,6 +15,7 @@ import fpl.soa.ordersservice.restClient.ProductRestClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.persistence.criteria.Order;
 import java.util.UUID;
@@ -60,7 +62,12 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public void approveOrder(String orderId) {
-
+        OrderEntity orderEntity = orderRepo.findById(orderId).orElse(null);
+        Assert.notNull(orderEntity, "No order is found with id " + orderId + " in the database table");
+        orderEntity.setStatus(OrderStatus.APPROVED);
+        orderRepo.save(orderEntity);
+        OrderApprovedEvent orderApprovedEvent = new OrderApprovedEvent(orderId);
+        kafkaTemplate.send(ordersEventsTopicName, orderApprovedEvent);
     }
 
     @Override
