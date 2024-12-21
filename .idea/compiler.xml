@@ -11,8 +11,10 @@
         <module name="payment-service" />
         <module name="common" />
         <module name="customer-service" />
+        <module name="gateway-service" />
         <module name="shipment-service" />
         <module name="credit-card-service" />
+        <module name="discovery-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +26,8 @@
       <module name="common" options="-parameters" />
       <module name="credit-card-service" options="-parameters" />
       <module name="customer-service" options="-parameters" />
+      <module name="discovery-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
       <module name="orders-service" options="-parameters" />
       <module name="payment-service" options="-parameters" />
       <module name="products-service" options="-parameters" />

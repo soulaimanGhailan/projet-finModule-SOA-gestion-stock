@@ -3,7 +3,6 @@ package fpl.soa.stockservice.web;
 import fpl.soa.stockservice.entities.PageInfo;
 import fpl.soa.stockservice.entities.Product;
 import fpl.soa.stockservice.service.ProductService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 

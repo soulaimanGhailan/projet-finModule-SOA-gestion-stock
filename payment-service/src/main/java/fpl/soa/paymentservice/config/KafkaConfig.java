@@ -13,8 +13,8 @@ public class KafkaConfig {
 
     @Value("${payments.events.topic.name}")
     private String paymentsEventsTopicName;
-    private final static Integer TOPIC_REPLICATION_FACTOR=3;
-    private final static Integer TOPIC_PARTITIONS=3;
+    private final static Integer TOPIC_REPLICATION_FACTOR=1;
+    private final static Integer TOPIC_PARTITIONS=1;
 
     @Bean
     KafkaTemplate<String, Object> kafkaTemplate(ProducerFactory<String, Object> producerFactory) {
