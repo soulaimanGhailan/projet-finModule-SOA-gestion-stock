@@ -1,6 +1,7 @@
 package fpl.soa.paymentservice.service;
 
 
+import fpl.soa.common.exceptions.CreditCardProcessorUnavailableException;
 import fpl.soa.paymentservice.entities.PaymentEntity;
 import fpl.soa.paymentservice.models.CreditCard;
 import fpl.soa.paymentservice.repositories.PaymentRepo;
@@ -22,10 +23,10 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentEntity process(PaymentEntity payment) {
+    public PaymentEntity process(PaymentEntity payment) throws CreditCardProcessorUnavailableException {
         CreditCard creditCard = creditCardRestClient.getCreditCard(payment.getCustomerId());
-        if (creditCard == null) {
-            throw new RuntimeException("not credit card found for user " + payment.getCustomerId());
+        if (creditCard.getCardId() == null) {
+            throw new CreditCardProcessorUnavailableException("credit card not found") ;
         }
         /** process payment logic { charge the card } **/
         return paymentRepository.save(payment);

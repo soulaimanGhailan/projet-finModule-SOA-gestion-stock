@@ -1,7 +1,9 @@
 package fpl.soa.stockservice.service.handler;
 
 
+import fpl.soa.common.commands.CancelProductReservationCommand;
 import fpl.soa.common.commands.ReserveProductCommand;
+import fpl.soa.common.events.ProductReservationCancelledEvent;
 import fpl.soa.common.events.ProductReservationFailedEvent;
 import fpl.soa.common.events.ProductReservedEvent;
 import fpl.soa.stockservice.entities.Product;
@@ -51,5 +53,14 @@ public class ProductCommandsHandler {
                     command.getOrderId(), command.getProductQuantity());
             kafkaTemplate.send(productEventsTopicName, productReservationFailedEvent);
         }
+    }
+    @KafkaHandler
+    public void handleCommand(@Payload CancelProductReservationCommand command) {
+        Product productToCancel = Product.builder().quantity(command.getProductQuantity()).id(command.getProductId()).build();
+        productService.cancelReservation(productToCancel, command.getOrderId());
+
+        ProductReservationCancelledEvent productReservationCancelledEvent =
+                new ProductReservationCancelledEvent(command.getProductId(), command.getOrderId());
+        kafkaTemplate.send(productEventsTopicName, productReservationCancelledEvent);
     }
 }

@@ -14,7 +14,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     @Override
     public CreditCard getCreditCardById(String customerId) {
-        return creditCardRepo.findCreditCardByCustomerId(customerId).orElseThrow(() -> new RuntimeException("credit card not found"));
+        return creditCardRepo.findCreditCardByCustomerId(customerId).orElse(new CreditCard()) ;
     }
 
     @Override

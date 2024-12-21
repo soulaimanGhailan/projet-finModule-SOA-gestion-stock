@@ -20,7 +20,7 @@ public class CreditCardRestController {
     }
 
     @PostMapping
-    public CreditCard getCreditCard(@RequestBody CreditCard creditCard) {
+    public CreditCard addCreditCard(@RequestBody CreditCard creditCard) {
         return creditCardService.createCreditCard(creditCard) ;
     }
 

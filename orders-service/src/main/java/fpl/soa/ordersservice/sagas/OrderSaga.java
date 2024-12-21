@@ -1,9 +1,6 @@
 package fpl.soa.ordersservice.sagas;
 
-import fpl.soa.common.commands.ApproveOrderCommand;
-import fpl.soa.common.commands.InitiateShipmentCommand;
-import fpl.soa.common.commands.ProcessPaymentCommand;
-import fpl.soa.common.commands.ReserveProductCommand;
+import fpl.soa.common.commands.*;
 import fpl.soa.common.events.*;
 import fpl.soa.common.types.OrderStatus;
 import fpl.soa.ordersservice.entities.OrderEntity;
@@ -96,5 +93,24 @@ public class OrderSaga {
     public void handleEvent(@Payload OrderApprovedEvent event) {
         System.out.println("***** SAGA step 5 : OrderApproved / orderId : " + event.getOrderId() + " ************* ");
         orderHistoryService.add(event.getOrderId(), OrderStatus.APPROVED);
+    }
+
+    /** roll back transaction **/
+    @KafkaHandler
+    public void handleEvent(@Payload PaymentFailedEvent event) {
+        System.out.println("***** SAGA rollback transaction : PaymentFailedEvent / orderId : " + event.getOrderId() + " reserved products quantity "+ event.getProductQuantity() + " ************* ");
+        CancelProductReservationCommand cancelProductReservationCommand =
+                new CancelProductReservationCommand(event.getProductId(),
+                        event.getOrderId(),
+                        event.getProductQuantity());
+        kafkaTemplate.send(productsCommandsTopicName, cancelProductReservationCommand);
+    }
+
+    @KafkaHandler
+    public void handleEvent(@Payload ProductReservationCancelledEvent event) {
+        System.out.println("***** SAGA rollback transaction : ProductReservationCancelledEvent / orderId : " + event.getOrderId() + " ************* ");
+        RejectOrderCommand rejectOrderCommand = new RejectOrderCommand(event.getOrderId());
+        kafkaTemplate.send(ordersCommandsTopicName, rejectOrderCommand);
+        orderHistoryService.add(event.getOrderId(), OrderStatus.REJECTED);
     }
 }

@@ -85,4 +85,12 @@ public class OrdersServiceImpl implements OrdersService {
     public OrderEntity getOrderById(String orderId) {
         return orderRepo.findById(orderId).orElse(null);
     }
+
+    @Override
+    public void rejectOrder(String  orderId) {
+        OrderEntity orderEntity = orderRepo.findById(orderId).orElse(null);
+        Assert.notNull(orderEntity, "No order found with id: " + orderId);
+        orderEntity.setStatus(OrderStatus.REJECTED);
+        orderRepo.save(orderEntity);
+    }
 }

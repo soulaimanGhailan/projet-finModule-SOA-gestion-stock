@@ -2,6 +2,7 @@ package fpl.soa.ordersservice.service.handler;
 
 
 import fpl.soa.common.commands.ApproveOrderCommand;
+import fpl.soa.common.commands.RejectOrderCommand;
 import fpl.soa.ordersservice.service.OrdersService;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,5 +22,10 @@ public class OrderCommandsHandler {
     @KafkaHandler
     public void handleCommand(@Payload ApproveOrderCommand approveOrderCommand) {
         orderService.approveOrder(approveOrderCommand.getOrderId());
+    }
+
+    @KafkaHandler
+    public void handleCommand(@Payload RejectOrderCommand rejectOrderCommand) {
+        orderService.rejectOrder(rejectOrderCommand.getOrderId());
     }
 }

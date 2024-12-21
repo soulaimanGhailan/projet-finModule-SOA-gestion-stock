@@ -1,8 +1,8 @@
 package fpl.soa.common.exceptions;
 
-public class CreditCardProcessorUnavailableException extends RuntimeException {
+public class CreditCardProcessorUnavailableException extends Exception {
 
-    public CreditCardProcessorUnavailableException(Throwable cause) {
-        super(cause);
+    public CreditCardProcessorUnavailableException(String message) {
+        super(message);
     }
 }
