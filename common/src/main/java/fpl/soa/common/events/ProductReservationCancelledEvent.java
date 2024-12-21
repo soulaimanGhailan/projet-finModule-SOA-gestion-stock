@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class ProductReservationCancelledEvent {
-    private Long productId;
+    private String productId;
     private String orderId;
     }

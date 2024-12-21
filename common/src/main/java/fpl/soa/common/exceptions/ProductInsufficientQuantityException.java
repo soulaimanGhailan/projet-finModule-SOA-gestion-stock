@@ -8,6 +8,6 @@ import java.util.UUID;
 
 @Getter @AllArgsConstructor
 public class ProductInsufficientQuantityException extends RuntimeException {
-    private final Long productId;
+    private final String productId;
     private final String orderId;
 }

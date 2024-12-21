@@ -13,6 +13,6 @@ import java.util.UUID;
 public class OrderCreatedEvent {
     private String orderId;
     private String customerId;
-    private Long productId;
+    private String productId;
     private Integer productQuantity;
 }

@@ -18,8 +18,8 @@ public class PaymentEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String orderId;
-    private Long productId;
-    private BigDecimal productPrice;
+    private String productId;
+    private long productPrice;
     private Integer productQuantity;
     private String customerId ;
 }

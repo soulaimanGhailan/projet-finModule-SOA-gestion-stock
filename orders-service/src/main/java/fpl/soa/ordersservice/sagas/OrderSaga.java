@@ -76,6 +76,7 @@ public class OrderSaga {
     public void handleEvent(@Payload PaymentProcessedEvent event){
         System.out.println("***** SAGA step 3 : PaymentProcessed / orderId :  " + event.getOrderId() + " ************* ");
         OrderEntity orderWithCustomer = ordersService.getOrderWithCustomer(event.getOrderId());
+        System.out.println(orderWithCustomer.getCustomer());
         InitiateShipmentCommand initiateShipmentCommand = InitiateShipmentCommand.builder()
                 .orderId(event.getOrderId())
                 .shippingAddress(orderWithCustomer.getCustomer().getShippingAddress())

@@ -9,6 +9,6 @@ import java.util.UUID;
 @Data @AllArgsConstructor @NoArgsConstructor
 public class PaymentFailedEvent {
     private String orderId;
-    private Long productId;
+    private String productId;
     private Integer productQuantity;
 }

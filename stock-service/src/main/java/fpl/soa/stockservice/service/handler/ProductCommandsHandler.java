@@ -40,11 +40,11 @@ public class ProductCommandsHandler {
         System.out.println("reverved");
 
         try {
-            Product desiredProduct = Product.builder().id(command.getProductId()).quantity(command.getProductQuantity()).build();
+            Product desiredProduct = Product.builder().productId(command.getProductId()).quantity(command.getProductQuantity()).build();
             Product reservedProduct = productService.reserve(desiredProduct, command.getOrderId());
             ProductReservedEvent productReservedEvent = new ProductReservedEvent(command.getOrderId(),
                     command.getProductId(),
-                    reservedProduct.getPrice(),
+                    reservedProduct.getProductPrice().getPrice(),
                     command.getProductQuantity() , command.getCustomerId());
             kafkaTemplate.send(productEventsTopicName, productReservedEvent);
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class ProductCommandsHandler {
     }
     @KafkaHandler
     public void handleCommand(@Payload CancelProductReservationCommand command) {
-        Product productToCancel = Product.builder().quantity(command.getProductQuantity()).id(command.getProductId()).build();
+        Product productToCancel = Product.builder().quantity(command.getProductQuantity()).productId(command.getProductId()).build();
         productService.cancelReservation(productToCancel, command.getOrderId());
 
         ProductReservationCancelledEvent productReservationCancelledEvent =

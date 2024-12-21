@@ -16,4 +16,5 @@ public class Customer {
     private String lastname;
     private String phoneNumber;
     private String shippingAddress;
+    private ShoppingCart shoppingCart;
 }

@@ -22,7 +22,7 @@ public class OrderEntity {
     private String orderId;
     private OrderStatus status;
     private String customerId;
-    private Long productId;
+    private String productId;
     private Integer productQuantity;
     @Transient
     private Customer customer;

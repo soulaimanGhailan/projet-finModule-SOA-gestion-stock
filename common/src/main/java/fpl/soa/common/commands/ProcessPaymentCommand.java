@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor @Builder
 public class ProcessPaymentCommand {
     private String orderId;
-    private Long productId;
-    private BigDecimal productPrice;
+    private String productId;
+    private long productPrice;
     private Integer productQuantity;
     private String customerId;
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 @AllArgsConstructor
 public class CancelProductReservationCommand {
-    private Long productId;
+    private String productId;
     private String orderId;
     private Integer productQuantity;
 }

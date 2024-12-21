@@ -44,6 +44,7 @@ public class OrdersServiceImpl implements OrdersService {
     public CreateOrderResponse placeOrder(CreateOrderRequest orderReq) {
         OrderEntity orderEntity = mapper.from(orderReq);
         orderEntity.setStatus(OrderStatus.CREATED);
+        orderEntity.setProductId(orderReq.getProductId());
         orderEntity.setOrderId(UUID.randomUUID().toString());
         OrderEntity savedOrderEntity = orderRepo.save(orderEntity);
 
@@ -74,6 +75,7 @@ public class OrdersServiceImpl implements OrdersService {
     public OrderEntity getOrderWithCustomer(String orderId) {
         OrderEntity orderById = getOrderById(orderId);
         Customer customer = customerRestClient.getCustomer(orderById.getCustomerId());
+        System.out.println(customer);
         Product product = productRestClient.getProduct(orderById.getProductId());
         orderById.setCustomer(customer);
         orderById.setProduct(product);

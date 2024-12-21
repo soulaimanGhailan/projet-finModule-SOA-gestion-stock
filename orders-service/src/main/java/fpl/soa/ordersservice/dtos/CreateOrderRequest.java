@@ -16,7 +16,7 @@ public class CreateOrderRequest {
     @NotNull
     private String customerId;
     @NotNull
-    private Long productId;
+    private String productId;
     @NotNull
     @Positive
     private Integer productQuantity;

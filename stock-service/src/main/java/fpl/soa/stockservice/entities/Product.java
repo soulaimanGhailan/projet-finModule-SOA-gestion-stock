@@ -1,23 +1,41 @@
 package fpl.soa.stockservice.entities;
 
-
-
+import fpl.soa.stockservice.enums.ProductCategory;
+import fpl.soa.stockservice.enums.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-@Table(name = "products")
-@Entity @AllArgsConstructor @NoArgsConstructor @Data
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Document
 public class Product {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Integer quantity;
+    @Id
+    private String productId ;
     private String name;
-    private BigDecimal price ;
+    private Date addingDate ;
+    private String brand ;
+    private int quantity ;
     private String originLocation ;
+    private String description ;
+    @Field
+    private ProductCategory category;
+    @Field
+    private ProductStatus status;
+    private Price productPrice;
+    @Field
+    private List<String> colors;
+    private boolean selected ;
+    private List<String> productImagesBas64 = new ArrayList<>();
+    private Dimension dimension ;
 }

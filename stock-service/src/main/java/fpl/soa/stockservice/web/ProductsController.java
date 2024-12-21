@@ -1,13 +1,10 @@
 package fpl.soa.stockservice.web;
 
+import fpl.soa.stockservice.entities.PageInfo;
 import fpl.soa.stockservice.entities.Product;
 import fpl.soa.stockservice.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.UUID;
 
 
 @RestController
@@ -19,20 +16,24 @@ public class ProductsController {
         this.productService = productService;
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<Product> findAll() {
-        return productService.findAll();
+
+
+    @GetMapping("{size}")
+    public PageInfo getProductsPageInfo(@PathVariable int size){
+        return this.productService.getProductPageInfo(size);
+    }
+
+    @GetMapping("find/{productId}")
+    public Product getProductById(@PathVariable String productId){
+        return this.productService.getProductById(productId);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Product save(@RequestBody Product request) {
-       return productService.save(request);
+    public Product createProduct(@RequestBody Product product){
+        return this.productService.createProduct(product);
     }
-
-    @GetMapping("/id/{id}")
-    public Product findById(@PathVariable Long id) {
-        return productService.getById(id) ;
+    @PutMapping
+    public Product update(@RequestBody Product product){
+        return this.productService.updateProduct(product);
     }
 }
