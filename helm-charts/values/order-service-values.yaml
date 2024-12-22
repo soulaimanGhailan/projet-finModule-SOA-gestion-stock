@@ -1,0 +1,20 @@
+depName: orders-service-dep
+replicasNum: 1
+podName: orders-service-pod
+imageName: soulaimandockerhub/order-service
+imageVersion: v1.2
+containerName: orders-service-container
+containerPort: 8080
+containerEnvVar:
+  - name: SERVER_PORT
+    value: "8080"
+  - name: BOOTSRAP_KAFKA_SERVER
+    value: "kafka-0.kafka-headless.default.svc.cluster.local"
+  - name: SERVER1_PORT
+    value: "9192"
+  - name: DISCOVERY_SERVICE_URL
+    value: "discovery-service-svc:8761/eureka"
+serviceName: orders-service-svc
+servicePort: 8080
+serviceType: NodePort
+nodePort: 30020

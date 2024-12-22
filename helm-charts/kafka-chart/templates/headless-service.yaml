@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-headless
+  labels:
+    app: kafka
+spec:
+  clusterIP: None
+  ports:
+    - name: internal
+      port: {{ .Values.containerPortInternal }}
+    - name: controller
+      port: {{ .Values.containerPortController }}
+  selector:
+    app: kafka

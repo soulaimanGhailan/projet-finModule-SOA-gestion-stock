@@ -25,7 +25,7 @@ export class ProductDetailsComponent implements OnInit{
       s => {
         if(s.productItemState.dataState == DataStateEnum.LOADED) {
           if(s.productItemState.product && this.secService.profile.id){
-            this.productService.publishEvent(s.productItemState.product.productId , EventType.CLICK_PRODUCT , this.secService.profile.id)
+            // this.productService.publishEvent(s.productItemState.product.productId , EventType.CLICK_PRODUCT , this.secService.profile.id)
           }
         }
       })

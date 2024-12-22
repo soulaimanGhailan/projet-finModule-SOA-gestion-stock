@@ -50,17 +50,17 @@ export class ProductService implements OnInit{
   }
 
   public publishEvent(productId : string , eventType : EventType , customerId : string){
-      this.http.get<void>(this.productService + "/api/products/event/"+productId +"/" + customerId + "/" + eventType.toString()).subscribe(value =>
+      this.http.get<void>(this.productService + "/api/v1/products/event/"+productId +"/" + customerId + "/" + eventType.toString()).subscribe(value =>
       {
       })
   }
 
   public saveProduct(product : CreatedProduct):Observable<Product>{
-    return this.http.post<Product>(this.productService + "/api/products" , product) ;
+    return this.http.post<Product>(this.productService + "/api/v1/products" , product) ;
   }
 
   public editProduct(product : CreatedProduct):Observable<Product>{
-    return this.http.put<Product>(this.productService + "/api/products" , product) ;
+    return this.http.put<Product>(this.productService + "/api/v1/products" , product) ;
   }
 
   public deleteProduct(productId : string):Observable<Product>{

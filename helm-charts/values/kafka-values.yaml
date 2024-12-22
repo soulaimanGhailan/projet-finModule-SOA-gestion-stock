@@ -1,0 +1,25 @@
+replicasNum: 1
+imageName: bitnami/kafka:3.3.2
+containerName: kafka-kraft-container
+containerPortInternal: 9192
+containerPortController: 9094
+containerEnvVar:
+  - name: KAFKA_CFG_NODE_ID
+    value: "1"  # Static node ID, you can update it based on pod ordinal
+  - name: KAFKA_CFG_PROCESS_ROLES
+    value: broker,controller
+  - name: KAFKA_KRAFT_CLUSTER_ID
+    value: r4zt_wrqTRuT7W2NJsB_GA
+  - name: KAFKA_CFG_LISTENERS
+    value: PLAINTEXT://:9192,CONTROLLER://:9094
+  - name: KAFKA_CFG_ADVERTISED_LISTENERS
+    value: PLAINTEXT://kafka-0.kafka-headless.default.svc.cluster.local:9192
+  - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+    value: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+  - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
+    value: CONTROLLER
+  - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
+    value: PLAINTEXT
+  - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+    value: 1@kafka-0.kafka-headless.default.svc.cluster.local:9094
+

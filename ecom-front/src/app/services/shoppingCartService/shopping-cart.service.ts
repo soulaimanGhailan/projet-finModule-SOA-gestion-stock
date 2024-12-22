@@ -25,10 +25,10 @@ export class ShoppingCartService {
   }
 
   addProductToShoppingCart(addProductReq: AddItemRequest):Observable<ShoppingCart> {
-    return  this.http.post<ShoppingCart>(this.customerService + "/api" , addProductReq) ;
+    return  this.http.post<ShoppingCart>(this.customerService + "/api/v1/customers" , addProductReq) ;
   }
 
   deleteItemFromCart(req: DeleteProductReq):Observable<ShoppingCart>{
-    return  this.http.delete<ShoppingCart>(this.customerService + "/api/" +req.customerId+"/"+req.productId) ;
+    return  this.http.delete<ShoppingCart>(this.customerService + "/api/v1/customers/" +req.customerId+"/"+req.productId) ;
   }
 }

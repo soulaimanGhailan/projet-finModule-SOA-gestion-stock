@@ -1,0 +1,26 @@
+depName: page-event-consumer-dep
+replicasNum: 1
+podName: page-event-consumer-pod
+imageName: soulaimandockerhub/page-event-consumer-service
+imageVersion: v1
+containerName: page-event-consumer-container
+containerPort: 8080
+containerEnvVar:
+  - name: MONGODB_HOST
+    value: "mongodb-svc"
+  - name: MONGODB_PORT
+    value: "27017"
+  - name: SERVER_PORT
+    value: "8080"
+  - name: MONGODB_USERNAME
+    value: "admin"
+  - name: MONGODB_PASSWORD
+    value: "password"
+  - name: BOOTSRAP_KAFKA_SERVER
+    value: "kafka-svc"
+  - name: BOOTSRAP_KAFKA_PORT
+    value: "9092"
+serviceName: page-event-consumer-svc
+servicePort: 8080
+serviceType: NodePort
+nodePort: 30030
