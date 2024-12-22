@@ -10,6 +10,8 @@ import fpl.soa.customerservice.model.AddItemRequest;
 import fpl.soa.customerservice.model.Product;
 import fpl.soa.customerservice.repos.CustomerRepo;
 import fpl.soa.customerservice.repos.ShoppingCartRepo;
+import org.keycloak.KeycloakSecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +31,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCartItem createItem(AddItemRequest addItemRequest) {
         int quantity = 1 ;
-        Product p = this.productRestClient.getProduct(addItemRequest.getProductId()) ;
+        Product p = this.productRestClient.getProduct(addItemRequest.getProductId() , getToken()) ;
 //        Price productPrice = this.productRestClient.getProductPrice(addItemRequest.getProductId());
 //        p.setProductPrice(productPrice);
         p.setPickedColor(addItemRequest.getPickedColor());
@@ -89,6 +91,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
        return null ;
 
+    }
+
+    private String getToken(){
+        KeycloakSecurityContext context = (KeycloakSecurityContext) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        String token ="bearer "+ context.getTokenString();
+        return token;
     }
 
 

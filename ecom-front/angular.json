@@ -1,0 +1,139 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ecom-front": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ecom-front",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css" ,
+              "src/assets/template/bootstrap/css/bootstrap-responsive.min.css" ,
+              "src/assets/template/bootstrap/css/bootstrap.min.css",
+              "src/assets/template/themes/bootshop/bootstrap.min.css" ,
+              "src/assets/template/themes/css/base.css",
+              "src/assets/template/themes/css/bootstrap-responsive.min.css",
+              "src/assets/template/themes/css/font-awesome.css",
+              "src/assets/template/themes/css/font-awesome-ie7.css"
+            ],
+            "scripts": [
+              "src/assets/template/bootstrap/js/bootstrap.min.js" ,
+              "src/assets/template/themes/js/google-code-prettify/prettify.js",
+              "src/assets/template/themes/js/bootshop.js",
+              "src/assets/template/themes/js/bootstrap.min.js",
+              "src/assets/template/themes/js/jquery.js",
+              "src/assets/template/themes/js/jquery.lightbox-0.5.js",
+              "src/assets/template/themes/js/less.js",
+              "src/assets/template/themes/switch/theamswitcher.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "ecom-front:build:production"
+            },
+            "development": {
+              "browserTarget": "ecom-front:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ecom-front:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css" ,
+              "src/assets/template/bootstrap/css/bootstrap-responsive.min.css" ,
+              "src/assets/template/bootstrap/css/bootstrap.min.css",
+              "src/assets/template/themes/bootshop/bootstrap.min.css" ,
+              "src/assets/template/themes/css/base.css",
+              "src/assets/template/themes/css/bootstrap-responsive.min.css",
+              "src/assets/template/themes/css/font-awesome.css",
+              "src/assets/template/themes/css/font-awesome-ie7.css"
+            ],
+            "scripts": [
+              "src/assets/template/bootstrap/js/bootstrap.min.js" ,
+              "src/assets/template/themes/js/google-code-prettify/prettify.js",
+              "src/assets/template/themes/js/bootshop.js",
+              "src/assets/template/themes/js/bootstrap.min.js",
+              "src/assets/template/themes/js/jquery.js",
+              "src/assets/template/themes/js/jquery.lightbox-0.5.js",
+              "src/assets/template/themes/js/less.js",
+              "src/assets/template/themes/switch/theamswitcher.js"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

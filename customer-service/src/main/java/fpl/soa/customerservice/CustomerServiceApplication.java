@@ -16,7 +16,7 @@ public class CustomerServiceApplication {
         SpringApplication.run(CustomerServiceApplication.class, args);
     }
 
-    @Bean
+//    @Bean
     CommandLineRunner run(CustomerService customerService) {
         return args -> {
             Customer build = Customer.builder()

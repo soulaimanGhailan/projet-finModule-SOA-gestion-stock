@@ -1,0 +1,24 @@
+<li class="span3">
+  <div class="thumbnail" style="background-color: white">
+    <a style="cursor: pointer" (click)="onProductItem()"><img src="{{product.productImagesBas64[0]}}" alt=""/></a>
+    <div class="caption">
+      <h5>{{product.name}}</h5>
+      <h4 style="text-align:center">
+<!--        check if admin-->
+        <ng-container *ngIf="secService.hasRoleIn(['ADMIN'])">
+          <a (click)="deleteProduct()" class="btn">
+            <i class="icon-trash" ></i>
+          </a>
+        </ng-container>
+        <a class="btn" style="cursor: pointer" (click)="addProductToCart()">
+          Add to <i class="icon-shopping-cart"></i>
+        </a>
+          <a class="btn btn-primary" href="#">
+          {{product.productPrice.symbol}}{{product.productPrice.price}}
+        </a>
+      </h4>
+    </div>
+  </div>
+</li>
+
+

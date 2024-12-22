@@ -9,4 +9,6 @@ public interface CustomerService {
     Customer createCustomer(Customer customer) ;
     Customer getCustomer(String customerId);
     List<Customer> getAllCustomers();
+    void syncKeycloakUsers();
+
 }
