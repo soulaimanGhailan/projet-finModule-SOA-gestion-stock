@@ -16,8 +16,8 @@ releases:
     values:
       - values/order-service-values.yaml
     needs:
-      - kafka
-      - discovery-service
+#      - kafka
+#      - discovery-service
 
 
 #  - name: postgres

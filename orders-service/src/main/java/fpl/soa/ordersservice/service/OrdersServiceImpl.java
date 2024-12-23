@@ -12,8 +12,10 @@ import fpl.soa.ordersservice.models.Product;
 import fpl.soa.ordersservice.repositories.OrderRepo;
 import fpl.soa.ordersservice.restClient.CustomerRestClient;
 import fpl.soa.ordersservice.restClient.ProductRestClient;
+import org.keycloak.KeycloakSecurityContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -74,9 +76,9 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public OrderEntity getOrderWithCustomer(String orderId) {
         OrderEntity orderById = getOrderById(orderId);
-        Customer customer = customerRestClient.getCustomer(orderById.getCustomerId());
+        Customer customer = customerRestClient.getCustomer(orderById.getCustomerId() , getToken());
         System.out.println(customer);
-        Product product = productRestClient.getProduct(orderById.getProductId());
+        Product product = productRestClient.getProduct(orderById.getProductId() , getToken());
         orderById.setCustomer(customer);
         orderById.setProduct(product);
         return orderById;
@@ -95,4 +97,17 @@ public class OrdersServiceImpl implements OrdersService {
         orderEntity.setStatus(OrderStatus.REJECTED);
         orderRepo.save(orderEntity);
     }
+
+    @Override
+    public Customer getCustomerOfOrder(String orderId) {
+        OrderEntity orderEntity = orderRepo.findById(orderId).orElse(null);
+        return customerRestClient.getCustomer(orderEntity.getCustomerId() , getToken());
+    }
+
+    private String getToken(){
+        KeycloakSecurityContext context = (KeycloakSecurityContext) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+        String token ="bearer "+ context.getTokenString();
+        return token;
+    }
+
 }

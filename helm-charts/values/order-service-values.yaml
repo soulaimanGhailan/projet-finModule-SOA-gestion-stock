@@ -13,7 +13,7 @@ containerEnvVar:
   - name: SERVER1_PORT
     value: "9192"
   - name: DISCOVERY_SERVICE_URL
-    value: "discovery-service-svc:8761/eureka"
+    value: "http://discovery-service-svc:8761/eureka"
 serviceName: orders-service-svc
 servicePort: 8080
 serviceType: NodePort
