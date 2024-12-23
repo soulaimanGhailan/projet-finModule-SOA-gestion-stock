@@ -2,7 +2,7 @@ depName: shipment-service-dep
 replicasNum: 1
 podName: shipment-service-pod
 imageName: soulaimandockerhub/shipment-service
-imageVersion: v1.0
+imageVersion: v2.1
 containerName: shipment-service-container
 containerPort: 8080
 containerEnvVar:

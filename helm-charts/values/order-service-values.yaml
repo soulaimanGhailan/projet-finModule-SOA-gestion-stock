@@ -2,7 +2,7 @@ depName: orders-service-dep
 replicasNum: 1
 podName: orders-service-pod
 imageName: soulaimandockerhub/order-service
-imageVersion: v1.3
+imageVersion: v2.1
 containerName: orders-service-container
 containerPort: 8080
 containerEnvVar:

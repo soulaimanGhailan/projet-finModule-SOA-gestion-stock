@@ -2,7 +2,7 @@ depName: stock-service-dep
 replicasNum: 1
 podName: stock-service-pod
 imageName: soulaimandockerhub/stock-service
-imageVersion: v1.0
+imageVersion: v2.1
 containerName: stock-service-container
 containerPort: 8080
 containerEnvVar:
