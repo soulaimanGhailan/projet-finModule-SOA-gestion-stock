@@ -2,7 +2,7 @@ depName: credit-card-service-dep
 replicasNum: 1
 podName: credit-card-service-pod
 imageName: soulaimandockerhub/credit-card-service
-imageVersion: v1.0
+imageVersion: v2.1
 containerName: credit-card-service-container
 containerPort: 8080
 containerEnvVar:

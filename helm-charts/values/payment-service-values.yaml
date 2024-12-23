@@ -1,8 +1,8 @@
 depName: payment-service-dep
 replicasNum: 1
 podName: payment-service-pod
-imageName: soulaimandockerhub/payement-service
-imageVersion: v1.0
+imageName: soulaimandockerhub/payment-service
+imageVersion: v2.1
 containerName: payment-service-container
 containerPort: 8080
 containerEnvVar:

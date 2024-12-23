@@ -15,5 +15,5 @@ public class PaymentFailedEvent {
     private String shippingAddress;
     private String firstname;
     private String lastname;
-    private long amount ;
+//    private long amount ;
 }
