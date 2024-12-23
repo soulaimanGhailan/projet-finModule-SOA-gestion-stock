@@ -1,6 +1,4 @@
 releases:
-
-
   - name: kafka
     chart: kafka-chart
     values:
@@ -11,23 +9,77 @@ releases:
       - values/discovery-service-values.yaml
     needs:
 
+  - name: mongodb
+    chart: mongo-chart
+    values:
+      - values/mongodb-values.yaml
+
+  - name: mongo-express
+    chart: mongo-chart
+    values:
+      - values/mongo-express-values.yaml
+    needs:
+      - mongodb
+
+
   - name: orders-service
     chart: backend-chart
     values:
       - values/order-service-values.yaml
     needs:
-#      - kafka
-#      - discovery-service
+      - kafka
+      - discovery-service
 
+  - name: stock-service
+    chart: backend-chart
+    values:
+      - values/stock-service-values.yaml
+    needs:
+      - mongodb
+      - kafka
+      - discovery-service
 
-#  - name: postgres
-#    chart: postgress-chart-keycloak
-#    values:
-#      - values/postgress-keycloak-values.yaml
-#
-#  - name: keycloak
-#    chart: keycloak-chart
-#    values:
-#          - values/keycloak-values.yaml
-#    needs:
-#      - postgres
+  - name: shipment-service
+    chart: backend-chart
+    values:
+      - values/shipment-service-values.yaml
+    needs:
+      - kafka
+      - discovery-service
+
+  - name: payment-service
+    chart: backend-chart
+    values:
+      - values/payment-service-values.yaml
+    needs:
+      - kafka
+      - discovery-service
+
+  - name: customer-service
+    chart: backend-chart
+    values:
+      - values/customer-service-values.yaml
+    needs:
+      - mongodb
+      - kafka
+      - discovery-service
+
+  - name: criditcard-service
+    chart: backend-chart
+    values:
+      - values/criditcard-service-values.yaml
+    needs:
+      - kafka
+      - discovery-service
+
+  - name: postgres
+    chart: postgress-chart-keycloak
+    values:
+      - values/postgress-keycloak-values.yaml
+
+  - name: keycloak
+    chart: keycloak-chart
+    values:
+          - values/keycloak-values.yaml
+    needs:
+      - postgres

@@ -45,14 +45,28 @@ public class PaymentsCommandsHandler {
                     .productPrice(command.getProductPrice())
                     .build();
             PaymentEntity processedPayment = paymentService.process(payment);
-            PaymentProcessedEvent paymentProcessedEvent = new PaymentProcessedEvent(processedPayment.getOrderId(),
-                    processedPayment.getId());
+            PaymentProcessedEvent paymentProcessedEvent = PaymentProcessedEvent.builder()
+                    .orderId(processedPayment.getOrderId())
+                    .paymentId(payment.getId())
+                    .amount(payment.getAmount())
+                    .customerEmailAddress(command.getCustomerEmailAddress())
+                    .shippingAddress(command.getShippingAddress())
+                    .originatingAddress(command.getOriginatingAddress())
+                    .firstname(command.getFirstname())
+                    .lastname(command.getLastname())
+                    .build();
+
             kafkaTemplate.send(paymentEventsTopicName, paymentProcessedEvent);
         } catch (CreditCardProcessorUnavailableException e) {
             logger.error(e.getLocalizedMessage(), e);
-            PaymentFailedEvent paymentFailedEvent = new PaymentFailedEvent(command.getOrderId(),
-                    command.getProductId(),
-                    command.getProductQuantity());
+            PaymentFailedEvent paymentFailedEvent = PaymentFailedEvent.builder()
+                    .orderId(command.getOrderId())
+                    .productId(command.getProductId())
+                    .productQuantity(command.getProductQuantity())
+                    .customerEmailAddress(command.getCustomerEmailAddress())
+                    .firstname(command.getFirstname())
+                    .lastname(command.getLastname())
+                    .build();
             kafkaTemplate.send(paymentEventsTopicName,paymentFailedEvent);
         }
     }

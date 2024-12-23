@@ -1,11 +1,13 @@
-depName: product-service-dep
+depName: stock-service-dep
 replicasNum: 1
-podName: product-service-pod
-imageName: soulaimandockerhub/ecom-backend-product-service
-imageVersion: secured-v1.1
-containerName: product-service-container
+podName: stock-service-pod
+imageName: soulaimandockerhub/stock-service
+imageVersion: v1.0
+containerName: stock-service-container
 containerPort: 8080
 containerEnvVar:
+  - name: DISCOVERY_SERVICE_URL
+    value: "http://discovery-service-svc:8761/eureka"
   - name: MONGODB_HOST
     value: "mongodb-svc"
   - name: MONGODB_PORT
@@ -16,17 +18,17 @@ containerEnvVar:
     value: "admin"
   - name: MONGODB_PASSWORD
     value: "password"
-  - name: BOOTSRAP_KAFKA_SERVER
-    value: "kafka-svc"
-  - name: BOOTSRAP_KAFKA_PORT
-    value: "9092"
   - name: KEYCLOAK_SERVER
-    value: "http://10.10.9.133:30080"
+    value: "http://10.10.9.137:30050"
   - name: KEYCLOAK_REALM
     value: "ecom-realm"
   - name: KEYCLOAK_CLIENT
     value: "ecom-app"
-serviceName: product-service-svc
+  - name: BOOTSRAP_KAFKA_SERVER
+    value: "kafka-0.kafka-headless.default.svc.cluster.local"
+  - name: SERVER1_PORT
+    value: "9192"
+serviceName: stock-service-svc
 servicePort: 8080
 serviceType: NodePort
 nodePort: 30010

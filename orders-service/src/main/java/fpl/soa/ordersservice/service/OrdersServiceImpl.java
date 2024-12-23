@@ -44,6 +44,8 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public CreateOrderResponse placeOrder(CreateOrderRequest orderReq) {
+        Customer customer = customerRestClient.getCustomer(orderReq.getCustomerId(), getToken());
+        Product product = productRestClient.getProduct(orderReq.getProductId(), getToken());
         OrderEntity orderEntity = mapper.from(orderReq);
         orderEntity.setStatus(OrderStatus.CREATED);
         orderEntity.setProductId(orderReq.getProductId());
@@ -55,6 +57,11 @@ public class OrdersServiceImpl implements OrdersService {
                 .customerId(savedOrderEntity.getCustomerId())
                 .productId(savedOrderEntity.getProductId())
                 .productQuantity(savedOrderEntity.getProductQuantity())
+                .customerEmailAddress(customer.getEmail())
+                .shippingAddress(customer.getShippingAddress())
+                .originatingAddress(product.getOriginLocation())
+                .firstname(customer.getFirstname())
+                .lastname(customer.getLastname())
                 .build();
 
         kafkaTemplate.send(ordersEventsTopicName , orderCreatedEvent) ;
@@ -104,10 +111,15 @@ public class OrdersServiceImpl implements OrdersService {
         return customerRestClient.getCustomer(orderEntity.getCustomerId() , getToken());
     }
 
+    @Override
+    public Customer getCustomer(String customerId) {
+        return customerRestClient.getCustomer(customerId , getToken());
+    }
+
     private String getToken(){
         KeycloakSecurityContext context = (KeycloakSecurityContext) SecurityContextHolder.getContext().getAuthentication().getCredentials();
         String token ="bearer "+ context.getTokenString();
+        System.out.println("*****************************");
         return token;
     }
-
 }

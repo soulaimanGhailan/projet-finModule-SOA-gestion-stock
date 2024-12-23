@@ -29,6 +29,7 @@ public class PaymentServiceImpl implements PaymentService {
             throw new CreditCardProcessorUnavailableException("credit card not found") ;
         }
         /** process payment logic { charge the card } **/
+        payment.setAmount(payment.getProductPrice()*payment.getProductQuantity());
         return paymentRepository.save(payment);
     }
 

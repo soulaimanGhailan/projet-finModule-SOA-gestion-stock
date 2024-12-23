@@ -47,12 +47,18 @@ public class OrderSaga {
     @KafkaHandler
     public void handleEvent(@Payload OrderCreatedEvent event) {
         System.out.println("***** SAGA step 1 : OrderCreated / orderId : " + event.getOrderId() + " ************* ");
-        ReserveProductCommand command = new ReserveProductCommand(
-                event.getProductId(),
-                event.getProductQuantity(),
-                event.getOrderId() ,
-                event.getCustomerId()
-        );
+        ReserveProductCommand command = ReserveProductCommand.builder()
+                .productId(event.getProductId())
+                .orderId(event.getOrderId())
+                .productQuantity(event.getProductQuantity())
+                .customerId(event.getCustomerId())
+                .customerEmailAddress(event.getCustomerEmailAddress())
+                .shippingAddress(event.getShippingAddress())
+                .originatingAddress(event.getOriginatingAddress())
+                .firstname(event.getFirstname())
+                .lastname(event.getLastname())
+                .build();
+
         kafkaTemplate.send(productsCommandsTopicName,command);
         orderHistoryService.add(event.getOrderId(), OrderStatus.CREATED);
     }
@@ -66,6 +72,11 @@ public class OrderSaga {
                 .productPrice(event.getProductPrice())
                 .customerId(event.getCustomerId())
                 .productQuantity(event.getProductQuantity())
+                .customerEmailAddress(event.getCustomerEmailAddress())
+                .shippingAddress(event.getShippingAddress())
+                .originatingAddress(event.getOriginatingAddress())
+                .firstname(event.getFirstname())
+                .lastname(event.getLastname())
                 .build();
 
         kafkaTemplate.send(paymentsCommandsTopicName,processPaymentCommand);
@@ -75,12 +86,14 @@ public class OrderSaga {
     @KafkaHandler
     public void handleEvent(@Payload PaymentProcessedEvent event){
         System.out.println("***** SAGA step 3 : PaymentProcessed / orderId :  " + event.getOrderId() + " ************* ");
-        OrderEntity orderWithCustomer = ordersService.getOrderWithCustomer(event.getOrderId());
-        System.out.println(orderWithCustomer.getCustomer());
         InitiateShipmentCommand initiateShipmentCommand = InitiateShipmentCommand.builder()
                 .orderId(event.getOrderId())
-                .shippingAddress(orderWithCustomer.getCustomer().getShippingAddress())
-                .originatingAddress(orderWithCustomer.getProduct().getOriginLocation()).build();
+                .customerEmailAddress(event.getCustomerEmailAddress())
+                .shippingAddress(event.getShippingAddress())
+                .originatingAddress(event.getOriginatingAddress())
+                .firstname(event.getFirstname())
+                .lastname(event.getLastname())
+                .build();
         kafkaTemplate.send(shipmentCommandsTopicName,initiateShipmentCommand);
     }
 

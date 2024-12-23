@@ -30,4 +30,4 @@ cpu: 250m
 serviceName: keycloak-svc
 servicePort: 8080
 serviceType: NodePort
-nodePort: 30080
+nodePort: 30050

@@ -13,4 +13,7 @@ public class InitiateShipmentCommand {
     private String orderId ;
     private String shippingAddress ;
     private String originatingAddress ;
+    private String customerEmailAddress;
+    private String firstname;
+    private String lastname;
 }

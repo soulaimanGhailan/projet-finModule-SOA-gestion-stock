@@ -1,7 +1,7 @@
 export const environment = {
-  productService:"http://localhost:8087" ,
-  customerService:"http://localhost:8086" ,
-  KEYCLOAK_SERVER_URL: "http://localhost:8080/"  ,
+  productService:"http://10.10.9.137:30010" ,
+  customerService:"http://10.10.9.137:30060" ,
+  KEYCLOAK_SERVER_URL: "http://10.10.9.137:30050/"  ,
   KEYCLOAK_REALM: "ecom-realm"  ,
   KEYCLOAK_CLIENT_ID: "ecom-app"
 };

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor
 @Builder
 public class ShoppingCartItem {
-    private Product product;
+    private ProductCus product;
     private int quantity;
 }

@@ -22,4 +22,5 @@ public class PaymentEntity {
     private long productPrice;
     private Integer productQuantity;
     private String customerId ;
+    private long amount ;
 }

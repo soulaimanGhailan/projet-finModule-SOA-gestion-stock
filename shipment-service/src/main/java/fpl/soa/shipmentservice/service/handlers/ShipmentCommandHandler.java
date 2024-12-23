@@ -51,7 +51,11 @@ public class ShipmentCommandHandler {
                 .originatingAddress(shipmentEntity.getOrigin())
                 .shipmentInitDate(shipmentEntity.getShippedDate())
                 .shippingAddress(shipmentEntity.getDestination())
+                .customerEmailAddress(command.getCustomerEmailAddress())
+                .firstname(command.getFirstname())
+                .lastname(command.getLastname())
                 .orderId(shipmentEntity.getOrderId())
+                .trackingNum(createdShipmentEntity.getTrackingNumber())
                 .build();
 
         kafkaTemplate.send(ShipmentEventTopic, shipmentInProgressEvent);

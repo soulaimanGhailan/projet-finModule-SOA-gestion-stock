@@ -1,11 +1,13 @@
 depName: customer-service-dep
 replicasNum: 1
 podName: customer-service-pod
-imageName: soulaimandockerhub/ecom-backend-customer-service
-imageVersion: secured-v1.1
+imageName: soulaimandockerhub/customer-service
+imageVersion: v1.0
 containerName: customer-service-container
 containerPort: 8080
 containerEnvVar:
+  - name: DISCOVERY_SERVICE_URL
+    value: "http://discovery-service-svc:8761/eureka"
   - name: MONGODB_HOST
     value: "mongodb-svc"
   - name: MONGODB_PORT
@@ -16,10 +18,8 @@ containerEnvVar:
     value: "admin"
   - name: MONGODB_PASSWORD
     value: "password"
-  - name: PRODUCT_SERVICE_URL
-    value: "product-service-svc:8080"
   - name: KEYCLOAK_SERVER
-    value: "http://10.10.9.133:30080"
+    value: "http://10.10.9.137:30050"
   - name: KEYCLOAK_REALM
     value: "ecom-realm"
   - name: KEYCLOAK_CLIENT
@@ -28,8 +28,7 @@ containerEnvVar:
     value: "admin"
   - name: KEYCLOAK_ADMIN_PASSWORD
     value: "admin"
-
 serviceName: customer-service-svc
 servicePort: 80
 serviceType: NodePort
-nodePort: 30020
+nodePort: 30060

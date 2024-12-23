@@ -11,4 +11,5 @@ public interface OrdersService {
     OrderEntity getOrderById(String orderId);
     void rejectOrder(String orderId);
     Customer getCustomerOfOrder(String orderId);
+    Customer getCustomer(String CustomerId);
 }

@@ -42,10 +42,19 @@ public class ProductCommandsHandler {
         try {
             Product desiredProduct = Product.builder().productId(command.getProductId()).quantity(command.getProductQuantity()).build();
             Product reservedProduct = productService.reserve(desiredProduct, command.getOrderId());
-            ProductReservedEvent productReservedEvent = new ProductReservedEvent(command.getOrderId(),
-                    command.getProductId(),
-                    reservedProduct.getProductPrice().getPrice(),
-                    command.getProductQuantity() , command.getCustomerId());
+            ProductReservedEvent productReservedEvent = ProductReservedEvent.builder()
+                    .productId(command.getProductId())
+                    .productPrice(reservedProduct.getProductPrice().getPrice())
+                    .productQuantity(command.getProductQuantity())
+                    .customerId(command.getCustomerId())
+                    .customerEmailAddress(command.getCustomerEmailAddress())
+                    .shippingAddress(command.getShippingAddress())
+                    .originatingAddress(command.getOriginatingAddress())
+                    .firstname(command.getFirstname())
+                    .lastname(command.getLastname())
+                    .orderId(command.getOrderId())
+                    .build();
+
             kafkaTemplate.send(productEventsTopicName, productReservedEvent);
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage(), e);

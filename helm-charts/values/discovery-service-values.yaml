@@ -11,4 +11,4 @@ containerEnvVar:
 serviceName: discovery-service-svc
 servicePort: 8761
 serviceType: NodePort
-nodePort: 30010
+nodePort: 30080
