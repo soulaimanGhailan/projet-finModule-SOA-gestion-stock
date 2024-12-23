@@ -64,12 +64,17 @@ releases:
 #      - kafka
 #      - discovery-service
 #
-  - name: criditcard-service
-    chart: backend-chart
-    values:
-      - values/criditcard-service-values.yaml
+#  - name: criditcard-service
+#    chart: backend-chart
+#    values:
+#      - values/criditcard-service-values.yaml
 #    needs:
 #      - discovery-service
+
+  - name: notification-service
+    chart: notification-chart
+    values:
+      - values/notification-service-values.yaml
 
 #  - name: postgres
 #    chart: postgress-chart-keycloak

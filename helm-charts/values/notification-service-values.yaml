@@ -1,0 +1,16 @@
+depName: notification-service-dep
+replicasNum: 1
+podName: notification-service-pod
+imageName: soulaimandockerhub/notification-service
+imageVersion: v1.0
+containerName: notification-service-container
+containerPort: 9001
+containerEnvVar:
+  - name: KAFKA_BROKER
+    value: "kafka-0.kafka-headless.default.svc.cluster.local:9192"
+  - name: SERVICE_PORT
+    value: 9001
+serviceName: notification-service-svc
+servicePort: 9001
+serviceType: NodePort
+nodePort: 30100
