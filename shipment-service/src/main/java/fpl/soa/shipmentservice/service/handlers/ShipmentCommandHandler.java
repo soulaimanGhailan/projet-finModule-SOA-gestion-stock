@@ -1,6 +1,5 @@
 package fpl.soa.shipmentservice.service.handlers;
 
-import com.thoughtworks.xstream.converters.time.LocalDateConverter;
 import fpl.soa.common.commands.InitiateShipmentCommand;
 import fpl.soa.common.events.ShipmentInProgressEvent;
 import fpl.soa.shipmentservice.entities.ShipmentEntity;

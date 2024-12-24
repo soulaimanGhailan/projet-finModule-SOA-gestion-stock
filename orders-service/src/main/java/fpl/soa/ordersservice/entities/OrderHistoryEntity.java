@@ -5,11 +5,14 @@ import fpl.soa.common.types.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+
 import java.sql.Timestamp;
 
-@Entity @AllArgsConstructor @NoArgsConstructor @Data
+@Document
+@AllArgsConstructor @NoArgsConstructor @Data
 public class OrderHistoryEntity {
     @Id
     private String id;

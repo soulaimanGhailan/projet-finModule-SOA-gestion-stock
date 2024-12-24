@@ -15,10 +15,10 @@
         <module name="gateway-service" />
         <module name="shipment-service" />
         <module name="credit-card-service" />
-        <module name="discovery-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="discovery-service" target="17" />
       <module name="products-service" target="17" />
     </bytecodeTargetLevel>
   </component>
