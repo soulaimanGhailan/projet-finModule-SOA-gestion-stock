@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-headless
+  labels:
+    app: kafka
+spec:
+  clusterIP: None
+  ports:
+    - name: internal
+      port: 9192
+    - name: controller
+      port: 9094
+  selector:
+    app: kafka
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka
+spec:
+  serviceName: kafka-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+        - name: kafka
+          image: bitnami/kafka:3.3.2
+          env:
+            - name: KAFKA_CFG_NODE_ID
+              value: "1"  # Static node ID, you can update it based on pod ordinal
+            - name: KAFKA_CFG_PROCESS_ROLES
+              value: broker,controller
+            - name: KAFKA_KRAFT_CLUSTER_ID
+              value: r4zt_wrqTRuT7W2NJsB_GA
+            - name: KAFKA_CFG_LISTENERS
+              value: PLAINTEXT://:9192,CONTROLLER://:9094
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: PLAINTEXT://kafka-0.kafka-headless.default.svc.cluster.local:9192
+            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+              value: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+            - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
+              value: CONTROLLER
+            - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
+              value: PLAINTEXT
+            - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+              value: 1@kafka-0.kafka-headless.default.svc.cluster.local:9094
+          ports:
+            - containerPort: 9192
+              name: internal
+            - containerPort: 9094
+              name: controller
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-service
+  template:
+    metadata:
+      labels:
+        app: orders-service
+    spec:
+      containers:
+        - name: orders-service
+          image:  soulaimandockerhub/order-service:v1.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            # Kafka Bootstrap server updated to use DNS
+            - name: BOOTSRAP_KAFKA_SERVER
+              value: "kafka-0.kafka-headless.default.svc.cluster.local"
+            - name: SERVER1_PORT
+              value: "9192"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-service
+spec:
+  selector:
+    app: orders-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: NodePort
+

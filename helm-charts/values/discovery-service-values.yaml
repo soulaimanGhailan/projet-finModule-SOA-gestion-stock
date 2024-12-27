@@ -1,0 +1,14 @@
+depName: discovery-service-dep
+replicasNum: 1
+podName: discovery-service-pod
+imageName: soulaimandockerhub/discovery-service
+imageVersion: v1.0
+containerName: discovery-service-container
+containerPort: 8761
+containerEnvVar:
+  - name: SERVER_PORT
+    value: "8761"
+serviceName: discovery-service-svc
+servicePort: 8761
+serviceType: NodePort
+nodePort: 30080

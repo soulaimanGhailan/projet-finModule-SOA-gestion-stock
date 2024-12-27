@@ -1,0 +1,22 @@
+<div id="mainBody">
+  <div class="container">
+    <div class="row">
+      <app-sidecar> </app-sidecar>
+      <div class="span9">
+
+            <ul class="breadcrumb">
+              <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+              <li><a href="products.html">Products</a> <span class="divider">/</span></li>
+              <li class="active">product Details</li>
+            </ul>
+            <div class="row">
+              <ng-container *ngIf="productItem$ | async as state">
+                <app-gallery [product]="state.product"></app-gallery>
+                <app-product-item-description [product]="state.product"></app-product-item-description>
+                <app-product-item-addetional-info [product]="state.product"></app-product-item-addetional-info>
+              </ng-container>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>

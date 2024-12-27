@@ -1,0 +1,73 @@
+<div class="container mt-5 p-4 border rounded shadow-lg bg-light">
+  <h3 class="text-center text-primary mb-4">Credit Card Form</h3>
+  <form [formGroup]="creditCardForm" (ngSubmit)="onSubmit()">
+    <!-- Card Holder Name -->
+    <div class="mb-4">
+      <label class="form-label fw-bold">Card Holder Name</label>
+      <input
+        type="text"
+        class="form-control border-primary"
+        formControlName="cardHolderName"
+        placeholder="Enter cardholder name"
+      />
+    </div>
+    
+    <!-- Card Number -->
+    <div class="mb-4">
+      <label class="form-label fw-bold">Card Number</label>
+      <input
+        type="text"
+        class="form-control border-primary"
+        formControlName="cardNum"
+        placeholder="Enter card number"
+      />
+    </div>
+    
+    <!-- Expiration Date -->
+    <div class="mb-4">
+      <label class="form-label fw-bold">Expiration Month</label>
+      <input
+        type="text"
+        class="form-control border-primary"
+        formControlName="expirationMonth"
+        placeholder="MM"
+      />
+    </div>
+    
+    <div class="mb-4">
+      <label class="form-label fw-bold">Expiration Year</label>
+      <input
+        type="text"
+        class="form-control border-primary"
+        formControlName="expirationYear"
+        placeholder="YYYY"
+      />
+    </div>
+    
+    <!-- CVV -->
+    <div class="mb-4">
+      <label class="form-label fw-bold">CVV</label>
+      <input
+        type="text"
+        class="form-control border-primary"
+        formControlName="cvv"
+        placeholder="Enter CVV"
+      />
+    </div>
+    
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary btn-lg px-5">
+        Save Card
+      </button>
+    </div>
+  </form>
+</div>
+<div>
+  <button class="btn btn-link" (click)="onHome()"> Let's get back to home </button>
+</div>
+
+  
+  
+
+    

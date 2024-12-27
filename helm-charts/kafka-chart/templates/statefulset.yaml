@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka
+spec:
+  serviceName: kafka-headless
+  replicas: {{ .Values.replicasNum }}
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+        - image: {{ .Values.imageName }}
+          name: {{ .Values.containerName }}
+          ports:
+            - containerPort: {{ .Values.containerPortInternal }}
+              name: internal
+            - containerPort: {{ .Values.containerPortController }}
+              name: controller
+          env:
+          {{- range .Values.containerEnvVar}}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end}}
+          resources:
+            limits:
+              memory: 1Gi
+              cpu: 200m
+            requests:
+              cpu: 70m
+              memory: 200Mi

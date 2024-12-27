@@ -1,0 +1,30 @@
+<div id="mainBody">
+  <div class="container">
+    <div class="row">
+      <app-sidecar> </app-sidecar>
+      <div class="span9">
+        <ul class="breadcrumb">
+          <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+          <li class="active"> SHOPPING CART</li>
+        </ul>
+        <ng-container *ngIf="shoppingCart$ | async as cartState" [ngSwitch]="cartState.dataState">
+            <ng-container *ngSwitchCase="cartDataState.LOADING">
+              <h1>data is LOADING .....................................</h1>
+            </ng-container>
+            <ng-container *ngSwitchCase="cartDataState.LOADED">
+                <app-shopping-cart-items [shoppingCart]="cartState.shoppingCart"></app-shopping-cart-items>
+                <a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+                <a [routerLink]="['/order-confirmation']" 
+                   class="btn btn-large pull-right"
+                   [queryParams]="{cartId: cartState.shoppingCart?.id}">
+                   Next <i class="icon-arrow-right"></i>
+                </a>
+            </ng-container>
+            <ng-container *ngSwitchCase="cartDataState.ERROR">
+              <h1>data is loaded with error : / {{cartState.errorMessage}}  /</h1>
+            </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
