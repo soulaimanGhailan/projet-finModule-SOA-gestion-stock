@@ -2,12 +2,12 @@ depName: payment-service-dep
 replicasNum: 1
 podName: payment-service-pod
 imageName: soulaimandockerhub/payment-service
-imageVersion: v2.1
+imageVersion: v2.2
 containerName: payment-service-container
 containerPort: 8080
 containerEnvVar:
-  - name: DISCOVERY_SERVICE_URL
-    value: "http://discovery-service-svc:8761/eureka"
+  - name: CREDIT-CARD_SERVICE_URL
+    value: "credit-card-service-svc:8080"
   - name: SERVER_PORT
     value: "8080"
   - name: BOOTSRAP_KAFKA_SERVER
@@ -16,5 +16,3 @@ containerEnvVar:
     value: "9192"
 serviceName: payment-service-svc
 servicePort: 8080
-serviceType: NodePort
-nodePort: 30030

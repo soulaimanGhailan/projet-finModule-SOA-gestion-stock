@@ -1,6 +1,6 @@
 export const environment = {
-  productService:"http://10.10.9.137:30010" ,
-  customerService:"http://10.10.9.137:30060" ,
+  productService:"http://10.10.9.137:31286" ,
+  customerService:"http://10.10.9.137:31286" ,
   KEYCLOAK_SERVER_URL: "http://10.10.9.137:30050/"  ,
   KEYCLOAK_REALM: "ecom-realm"  ,
   KEYCLOAK_CLIENT_ID: "ecom-app"

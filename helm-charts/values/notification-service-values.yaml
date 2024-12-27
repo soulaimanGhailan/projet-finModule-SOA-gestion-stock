@@ -12,5 +12,3 @@ containerEnvVar:
     value: 9001
 serviceName: notification-service-svc
 servicePort: 9001
-serviceType: NodePort
-nodePort: 30100

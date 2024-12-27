@@ -2,12 +2,12 @@ depName: customer-service-dep
 replicasNum: 1
 podName: customer-service-pod
 imageName: soulaimandockerhub/customer-service
-imageVersion: v2.2
+imageVersion: v2.2.1
 containerName: customer-service-container
 containerPort: 8080
 containerEnvVar:
-  - name: DISCOVERY_SERVICE_URL
-    value: "http://discovery-service-svc:8761/eureka"
+  - name: PRODUCT_SERVICE_URL
+    value: "stock-service-svc:8080"
   - name: MONGODB_HOST
     value: "mongodb-svc"
   - name: MONGODB_PORT
@@ -28,7 +28,5 @@ containerEnvVar:
     value: "admin"
   - name: KEYCLOAK_ADMIN_PASSWORD
     value: "admin"
-serviceName: customer-service
+serviceName: customer-service-svc
 servicePort: 8080
-serviceType: NodePort
-nodePort: 30060

@@ -2,12 +2,10 @@ depName: shipment-service-dep
 replicasNum: 1
 podName: shipment-service-pod
 imageName: soulaimandockerhub/shipment-service
-imageVersion: v2.1
+imageVersion: v2.2
 containerName: shipment-service-container
 containerPort: 8080
 containerEnvVar:
-  - name: DISCOVERY_SERVICE_URL
-    value: "http://discovery-service-svc:8761/eureka"
   - name: SERVER_PORT
     value: "8080"
   - name: BOOTSRAP_KAFKA_SERVER
@@ -16,5 +14,3 @@ containerEnvVar:
     value: "9192"
 serviceName: shipment-service-svc
 servicePort: 8080
-serviceType: NodePort
-nodePort: 30020

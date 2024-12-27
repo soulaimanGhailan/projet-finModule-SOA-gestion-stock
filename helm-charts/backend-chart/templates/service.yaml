@@ -9,7 +9,6 @@ spec:
     - port: {{ .Values.servicePort }}
       protocol: TCP
       targetPort: {{ .Values.containerPort }}
-      nodePort: {{ .Values.nodePort }}
   selector:
     app: {{ .Values.podName }}
-  type: {{ .Values.serviceType }}
+  type: ClusterIP

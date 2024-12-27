@@ -2,12 +2,10 @@ depName: stock-service-dep
 replicasNum: 1
 podName: stock-service-pod
 imageName: soulaimandockerhub/stock-service
-imageVersion: v2.1
+imageVersion: v2.2
 containerName: stock-service-container
 containerPort: 8080
 containerEnvVar:
-  - name: DISCOVERY_SERVICE_URL
-    value: "http://discovery-service-svc:8761/eureka"
   - name: MONGODB_HOST
     value: "mongodb-svc"
   - name: MONGODB_PORT
@@ -30,5 +28,3 @@ containerEnvVar:
     value: "9192"
 serviceName: stock-service-svc
 servicePort: 8080
-serviceType: NodePort
-nodePort: 30010

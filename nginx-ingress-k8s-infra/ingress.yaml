@@ -1,0 +1,57 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: ""
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /api/v1/creditCard
+            pathType: Prefix
+            backend:
+              service:
+                name: credit-card-service-svc
+                port:
+                  number: 8080
+
+          - path: /api/v1/customers
+            pathType: Prefix
+            backend:
+              service:
+                name: customer-service-svc
+                port:
+                  number: 8080
+
+          - path: /customers
+            pathType: Prefix
+            backend:
+              service:
+                name: customer-service-svc
+                port:
+                  number: 8080
+
+          - path: /api/v1/orders
+            pathType: Prefix
+            backend:
+              service:
+                name: order-service-svc
+                port:
+                  number: 8080
+
+          - path: /api/v1/products
+            pathType: Prefix
+            backend:
+              service:
+                name: stock-service-svc
+                port:
+                  number: 8080
+          - path: /products
+            pathType: Prefix
+            backend:
+              service:
+                name: stock-service-svc
+                port:
+                  number: 8080

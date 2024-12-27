@@ -21,12 +21,12 @@ spec:
           ports:
             - containerPort: {{ .Values.containerPort }}
           readinessProbe:
-            initialDelaySeconds: 20
+            initialDelaySeconds: 60
             httpGet:
               port: {{ .Values.containerPort }}
               path: "/actuator/health"
-            periodSeconds: 15
-            failureThreshold: 20
+            periodSeconds: 5
+            failureThreshold: 40
           livenessProbe:
             initialDelaySeconds: 20
             httpGet:
